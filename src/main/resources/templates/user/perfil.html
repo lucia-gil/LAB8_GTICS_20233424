@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head('Mi perfil')}"></head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div class="container mt-4">
+    <h3>Mi perfil</h3>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-3">Nombre</dt>
+        <dd class="col-sm-9" th:text="|${perfil.firstname} ${perfil.lastname}|"></dd>
+        <dt class="col-sm-3">Correo</dt>
+        <dd class="col-sm-9" th:text="${perfil.email}"></dd>
+        <dt class="col-sm-3">Rol</dt>
+        <dd class="col-sm-9" th:text="${perfil.rol.role_name}"></dd>
+        <dt class="col-sm-3">Introducción</dt>
+        <dd class="col-sm-9" th:text="${perfil.intro}"></dd>
+        <dt class="col-sm-3">Perfil</dt>
+        <dd class="col-sm-9" th:text="${perfil.profile}"></dd>
+    </dl>
+    <a class="btn btn-primary" th:href="@{/user/edit}">Editar mi perfil</a>
+</div>
+</body>
+</html>

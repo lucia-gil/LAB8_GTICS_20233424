@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head('Acceso denegado')}"></head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div class="container mt-4">
+    <h3>Acceso denegado</h3>
+    <p>No tienes permiso para ver esta página.</p>
+    <a class="btn btn-info" th:href="@{/post}">Volver a los posts</a>
+</div>
+</body>
+</html>

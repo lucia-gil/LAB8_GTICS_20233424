@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head('Amigos')}"></head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div class="container mt-4">
+    <h3>Solicitudes de amistad</h3>
+    <div class="alert alert-success" th:if="${param.enviada}">Solicitud enviada</div>
+    <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+
+    <h5 class="mt-4">Enviar solicitud</h5>
+    <div class="alert alert-info" th:if="${#lists.isEmpty(candidatos)}">No hay más usuarios disponibles</div>
+    <table class="table table-sm table-bordered" th:unless="${#lists.isEmpty(candidatos)}">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Introducción</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u : ${candidatos}">
+            <td th:text="|${u.firstname} ${u.lastname}|"></td>
+            <td th:text="${u.intro}"></td>
+            <td>
+                <form th:action="@{/friend/send}" method="post">
+                    <input type="hidden" name="receiverId" th:value="${u.id_user}"/>
+                    <button type="submit" class="btn btn-sm btn-primary">Enviar soli</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h5 class="mt-4">Solicitudes enviadas</h5>
+    <div class="alert alert-info" th:if="${#lists.isEmpty(enviadas)}">Aún no enviaste solicitudes</div>
+    <table class="table table-sm table-bordered" th:unless="${#lists.isEmpty(enviadas)}">
+        <thead>
+        <tr>
+            <th>Para</th>
+            <th>Fecha</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="f : ${enviadas}">
+            <td th:text="|${f.receiver.firstname} ${f.receiver.lastname}|"></td>
+            <td th:text="${#temporals.format(f.sentAt, 'dd/MM/yyyy HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

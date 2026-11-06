@@ -1,0 +1,28 @@
+body {
+    padding-top: 56px;
+}
+.btn-info {
+    color: #fff;
+    background-color: #e83e8c;
+    border-color: #e83e8c;
+}
+
+.btn-info:hover {
+    color: #fff;
+    background-color: #d6246e;
+    border-color: #cc2268;
+}
+
+.btn-info:focus,
+.btn-info.focus {
+    color: #fff;
+    background-color: #d6246e;
+    border-color: #cc2268;
+    box-shadow: 0 0 0 0.2rem rgba(232, 62, 140, 0.5);
+}
+
+.btn-info:not(:disabled):not(.disabled):active {
+    color: #fff;
+    background-color: #cc2268;
+    border-color: #c21f62;
+}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head('Usuarios')}"></head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div class="container mt-4">
+    <h3>Lista de usuarios</h3>
+    <div class="alert alert-success" th:if="${param.eliminado}">Usuario eliminado</div>
+    <div class="alert alert-danger" th:if="${error != null}" th:text="${error}"></div>
+    <table class="table table-sm table-bordered">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Activo</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="u, info : ${listausuarios}">
+            <td th:text="${info.index + 1}"></td>
+            <td th:text="${u.id_user}"></td>
+            <td th:text="${u.firstname}"></td>
+            <td th:text="${u.lastname}"></td>
+            <td th:text="${u.email}"></td>
+            <td th:text="${u.rol.role_name}"></td>
+            <td th:text="${u.active} ? 'Sí' : 'No'"></td>
+            <td>
+                <div class="d-inline-flex">
+                    <a class="btn btn-sm btn-primary mr-1" th:href="@{/user/editar(id=${u.id_user})}">Editar</a>
+                    <form th:action="@{/user/borrar}" method="post" onsubmit="return confirm('¿Eliminar este usuario?')">
+                        <input type="hidden" name="id" th:value="${u.id_user}"/>
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

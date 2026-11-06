@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head('Usuario')}"></head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div class="container mt-4">
+    <h3 th:text="${modoAdmin} ? 'Editar usuario' : 'Editar mi perfil'">Editar</h3>
+    <hr/>
+    <form method="post" th:action="${modoAdmin} ? @{/user/actualizar} : @{/user/guardar}" th:object="${usuario}">
+        <input type="hidden" th:field="*{id_user}" th:if="${modoAdmin}"/>
+        <div class="form-group">
+            <label for="firstname">Nombre</label>
+            <input type="text" class="form-control" id="firstname" th:field="*{firstname}"/>
+            <div class="text-danger" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}"></div>
+        </div>
+        <div class="form-group">
+            <label for="lastname">Apellido</label>
+            <input type="text" class="form-control" id="lastname" th:field="*{lastname}"/>
+            <div class="text-danger" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}"></div>
+        </div>
+        <div class="form-group">
+            <label for="intro">Introducción</label>
+            <input type="text" class="form-control" id="intro" th:field="*{intro}"/>
+            <div class="text-danger" th:if="${#fields.hasErrors('intro')}" th:errors="*{intro}"></div>
+        </div>
+        <div class="form-group">
+            <label for="profile">Perfil</label>
+            <textarea class="form-control" rows="4" id="profile" th:field="*{profile}"></textarea>
+            <div class="text-danger" th:if="${#fields.hasErrors('profile')}" th:errors="*{profile}"></div>
+        </div>
+        <div th:if="${modoAdmin}">
+            <div class="form-group">
+                <label for="rol">Rol</label>
+                <select class="form-control" id="rol" th:field="*{rol.id_role}">
+                    <option th:each="r : ${roles}" th:value="${r.id_role}" th:text="${r.role_name}"></option>
+                </select>
+            </div>
+            <div class="form-check mb-3">
+                <input type="checkbox" class="form-check-input" id="active" th:field="*{active}"/>
+                <label class="form-check-label" for="active">Activo</label>
+            </div>
+        </div>
+        <a th:href="${modoAdmin} ? @{/user/list} : @{/user}" class="btn btn-danger">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+    </form>
+</div>
+</body>
+</html>

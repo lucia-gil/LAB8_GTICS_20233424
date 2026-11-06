@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{base :: head('Posts')}"></head>
+<body>
+<nav th:replace="~{base :: navbar}"></nav>
+<div class="container mt-4">
+    <h3 th:text="${tituloLista}">Posts</h3>
+    <div class="alert alert-danger" th:if="${param.acceso}">No tienes permiso para modificar ese post</div>
+    <div class="alert alert-info" th:if="${#lists.isEmpty(lista)}">No hay posts para mostrar</div>
+    <table class="table table-bordered table-sm" th:unless="${#lists.isEmpty(lista)}">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Resumen</th>
+            <th>Contenido</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${lista}">
+            <td th:text="${p.id_Post}"></td>
+            <td th:text="${p.title}"></td>
+            <td th:text="|${p.user.firstname} ${p.user.lastname}|"></td>
+            <td th:text="${p.summary}"></td>
+            <td th:text="${p.content}"></td>
+            <td th:text="${p.published} ? 'Publicado' : 'Borrador'"></td>
+            <td>
+                <div class="d-inline-flex" th:if="${esAdmin or p.user.id_user == idUsuario}">
+                    <a class="btn btn-sm btn-primary mr-1" th:href="@{/post/edit(id=${p.id_Post})}">Editar</a>
+                    <form th:action="@{/post/delete}" method="post" onsubmit="return confirm('¿Eliminar este post?')">
+                        <input type="hidden" name="id" th:value="${p.id_Post}"/>
+                        <button type="submit" class="btn btn-sm btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
